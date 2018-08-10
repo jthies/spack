@@ -86,6 +86,8 @@ class Xsdk(Package):
 
     depends_on('magma@2.2.0', when='@0.3.0 +cuda')
     depends_on('magma@2.2.0', when='@develop +cuda')
+    
+    depends_on('phist@develop kernel_lib=epetra', when='@develop')
 
     # xSDKTrilinos depends on the version of Trilinos built with
     # +tpetra which is turned off for faster xSDK
