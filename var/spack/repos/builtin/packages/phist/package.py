@@ -21,7 +21,7 @@ class Phist(CMakePackage):
     """
 
     homepage = "https://bitbucket.org/essex/phist/"
-    url = "https://bitbucket.org/essex/phist/get/phist-1.9.6.tar.gz"
+    url = "https://bitbucket.org/essex/phist/get/phist-1.11.1.tar.gz"
     git = "https://bitbucket.org/essex/phist.git"
 
     maintainers = ["jthies"]
@@ -34,6 +34,8 @@ class Phist(CMakePackage):
     version("develop", branch="devel")
     version("master", branch="master")
 
+    # more updates to lapack interface to work with cray-libsci
+    version("1.11.1", sha256="ff6a8d8e9d9c58272b351a3ead27ba71087575b590e35bd933eb5e51231995c6")
     # updated lapack interface to work with openblas and netlib-lapack
     version("1.11.0", sha256="36e6cc41a13884ba0a26f7be03e3f1882b1a2d14ca04353a609c0eec0cfb7a77")
 
@@ -128,6 +130,9 @@ class Phist(CMakePackage):
         description="generate Fortran 2003 bindings (requires Python3 and " "a Fortran compiler)",
     )
 
+    # Cray libsci does not provide the header lapack.h, this requirement was lifted
+    # in version phist@1.11.1
+    conflicts("^cray-libsci", when="@:1.11.0")
     # The builtin kernels switched from the 'mpi' to the 'mpi_f08' module in
     # phist 1.9.6, which causes compile-time errors with mpich and older
     # GCC versions.
